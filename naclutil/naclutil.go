@@ -17,15 +17,6 @@ const (
 	KeyLength   = 32
 )
 
-// Encode binary (potentially non-printable) data as a Base64-encoded string.
-func EncodeBytes(bin []byte) bytes.Buffer {
-	var buf bytes.Buffer
-	enc := base64.NewEncoder(base64.StdEncoding, &buf)
-	enc.Write(bin)
-	enc.Close()
-	return buf
-}
-
 // Create directory where keys will be stored.
 func CreateKeyStore(path string) error {
 	fi, err := os.Stat(path)
