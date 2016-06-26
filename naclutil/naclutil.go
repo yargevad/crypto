@@ -6,7 +6,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
-	iou "io/ioutil"
+	"io/ioutil"
 	"os"
 
 	box "golang.org/x/crypto/nacl/box"
@@ -16,16 +16,6 @@ const (
 	NonceLength = 24
 	KeyLength   = 32
 )
-
-// Read the contents of a file
-func IngestFile(path string) ([]byte, error) {
-	b, err := iou.ReadFile(path)
-	if err != nil {
-		return nil, err
-	}
-
-	return b, nil
-}
 
 // Encode binary (potentially non-printable) data as a Base64-encoded string.
 func EncodeBytes(bin []byte) bytes.Buffer {
@@ -113,13 +103,13 @@ func FetchKeypair(path, name string) ([]byte, []byte, error) {
 		}
 
 		fmt.Printf("NOTICE: writing public key to [%s]\n", pubPath)
-		err = iou.WriteFile(pubPath, (*pub)[:], 0644)
+		err = ioutil.WriteFile(pubPath, (*pub)[:], 0644)
 		if err != nil {
 			return nil, nil, err
 		}
 
 		fmt.Printf("NOTICE: writing private key to [%s]\n", keyPath)
-		err = iou.WriteFile(keyPath, (*key)[:], 0600)
+		err = ioutil.WriteFile(keyPath, (*key)[:], 0600)
 		if err != nil {
 			return nil, nil, err
 		}
@@ -128,11 +118,11 @@ func FetchKeypair(path, name string) ([]byte, []byte, error) {
 
 	} else {
 		fmt.Printf("NOTICE: using pre-generated keypair stored in [%s]\n", path)
-		pub, err := IngestFile(pubPath)
+		pub, err := ioutil.ReadFile(pubPath)
 		if err != nil {
 			return nil, nil, err
 		}
-		key, err := IngestFile(keyPath)
+		key, err := ioutil.ReadFile(keyPath)
 		if err != nil {
 			return nil, nil, err
 		}
