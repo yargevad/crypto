@@ -6,10 +6,10 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
-	box "golang.org/x/crypto/nacl/box"
 	iou "io/ioutil"
-	"log"
 	"os"
+
+	box "golang.org/x/crypto/nacl/box"
 )
 
 const (
@@ -37,33 +37,37 @@ func EncodeBytes(bin []byte) bytes.Buffer {
 }
 
 // Create directory where keys will be stored.
-func CreateKeyStore(path string) {
+func CreateKeyStore(path string) error {
 	fi, err := os.Stat(path)
 	if err != nil {
 		if !os.IsNotExist(err) {
-			log.Fatal(err)
+			return err
 		}
 		fmt.Printf("DEBUG: creating key store [%s]\n", path)
 		err = os.MkdirAll(path, 0700)
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 		fi, err = os.Stat(path)
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
 	}
 	if fi == nil {
-		log.Fatalf("ERROR: couldn't stat [%s]\n", path)
+		return err
 	}
 	if !fi.IsDir() {
-		log.Fatalf("ERROR: [%s] exists, not a directory!\n", path)
+		return err
 	}
+	return nil
 }
 
 // Return keys at the specified location, generating and creating them if necessary.
 func FetchKeypair(path, name string) ([]byte, []byte, error) {
-	CreateKeyStore(path)
+	err := CreateKeyStore(path)
+	if err != nil {
+		return nil, nil, err
+	}
 
 	pubPath := fmt.Sprintf("%s/%s.pub", path, name)
 	pubInfo, err := os.Stat(pubPath)
@@ -87,17 +91,17 @@ func FetchKeypair(path, name string) ([]byte, []byte, error) {
 
 	/* Unacceptable: one path exists and other does not */
 	if pubExists != keyExists {
-		err := fmt.Errorf("need neither or both of %s %s\n", pubPath, keyPath)
+		err = fmt.Errorf("need neither or both of %s %s\n", pubPath, keyPath)
 		return nil, nil, err
 	}
 
 	/* Unacceptable: either path is a directory */
 	if pubExists && pubInfo.IsDir() {
-		err := fmt.Errorf("found directory at %s\n", pubPath)
+		err = fmt.Errorf("found directory at %s\n", pubPath)
 		return nil, nil, err
 	}
 	if keyExists && keyInfo.IsDir() {
-		err := fmt.Errorf("found directory at %s\n", keyPath)
+		err = fmt.Errorf("found directory at %s\n", keyPath)
 		return nil, nil, err
 	}
 
