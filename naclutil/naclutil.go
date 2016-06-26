@@ -2,9 +2,7 @@
 package naclutil
 
 import (
-	"bytes"
 	"crypto/rand"
-	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"os"
