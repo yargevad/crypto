@@ -22,7 +22,6 @@ func CreateKeyStore(path string) error {
 		if !os.IsNotExist(err) {
 			return err
 		}
-		fmt.Printf("DEBUG: creating key store [%s]\n", path)
 		err = os.MkdirAll(path, 0700)
 		if err != nil {
 			return err
@@ -85,19 +84,16 @@ func FetchKeypair(path, name string) ([]byte, []byte, error) {
 	}
 
 	if !pubExists {
-		fmt.Printf("NOTICE: generating key pair for [%s]\n", name)
 		pub, key, err := box.GenerateKey(rand.Reader)
 		if err != nil {
 			return nil, nil, err
 		}
 
-		fmt.Printf("NOTICE: writing public key to [%s]\n", pubPath)
 		err = ioutil.WriteFile(pubPath, (*pub)[:], 0644)
 		if err != nil {
 			return nil, nil, err
 		}
 
-		fmt.Printf("NOTICE: writing private key to [%s]\n", keyPath)
 		err = ioutil.WriteFile(keyPath, (*key)[:], 0600)
 		if err != nil {
 			return nil, nil, err
@@ -106,7 +102,6 @@ func FetchKeypair(path, name string) ([]byte, []byte, error) {
 		return (*pub)[:], (*key)[:], nil
 
 	} else {
-		fmt.Printf("NOTICE: using pre-generated keypair stored in [%s]\n", path)
 		pub, err := ioutil.ReadFile(pubPath)
 		if err != nil {
 			return nil, nil, err
