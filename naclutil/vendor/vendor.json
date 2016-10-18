@@ -1,0 +1,43 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "/Ck2DFxjzCHkO+NZ+XGCPXo4tH0=",
+			"path": "github.com/pkg/errors",
+			"revision": "cbd18b5440315aa74a17dee2e50b67675b872b49",
+			"revisionTime": "2016-06-22T01:00:19Z"
+		},
+		{
+			"checksumSHA1": "h+pFYiRHBogczS8/F1NoN3Ata44=",
+			"path": "golang.org/x/crypto/curve25519",
+			"revision": "d81fdb778bf2c40a91b24519d60cdc5767318829",
+			"revisionTime": "2016-07-05T16:05:20Z"
+		},
+		{
+			"checksumSHA1": "hl0ImqBoUBVNVmz5ImX6YVBV9JU=",
+			"path": "golang.org/x/crypto/nacl/box",
+			"revision": "d81fdb778bf2c40a91b24519d60cdc5767318829",
+			"revisionTime": "2016-07-05T16:05:20Z"
+		},
+		{
+			"checksumSHA1": "UxdMiKUm6Ajczi6BRNkrPvoAPWQ=",
+			"path": "golang.org/x/crypto/nacl/secretbox",
+			"revision": "d81fdb778bf2c40a91b24519d60cdc5767318829",
+			"revisionTime": "2016-07-05T16:05:20Z"
+		},
+		{
+			"checksumSHA1": "jzb3hLJ0q13oPRct3Zclhnaa94w=",
+			"path": "golang.org/x/crypto/poly1305",
+			"revision": "d81fdb778bf2c40a91b24519d60cdc5767318829",
+			"revisionTime": "2016-07-05T16:05:20Z"
+		},
+		{
+			"checksumSHA1": "rpD48Mn9nOFgc5UnDjAHAodxHo4=",
+			"path": "golang.org/x/crypto/salsa20/salsa",
+			"revision": "d81fdb778bf2c40a91b24519d60cdc5767318829",
+			"revisionTime": "2016-07-05T16:05:20Z"
+		}
+	],
+	"rootPath": "github.com/yargevad/crypto/naclutil"
+}
